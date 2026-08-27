@@ -10,6 +10,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
+
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         self._handle_request()
@@ -33,6 +34,7 @@ class Handler(BaseHTTPRequestHandler):
             logging.error(f"Error: {e}")
             self.send_error(500, "Internal Server Error")
 
+
 def main():
     server = HTTPServer(('', PORT), Handler)
     logging.info(f"Starting server on port {PORT}")
@@ -43,5 +45,7 @@ def main():
     server.server_close()
     logging.info("Server stopped")
 
+
 if __name__ == '__main__':
     main()
+    
