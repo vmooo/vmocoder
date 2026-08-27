@@ -35,7 +35,11 @@ jobs:
 
     - name: Run container test
       run: |
-        docker run -d -p 8080:8080 --name test-app my-encoder
+        docker run -d -p 8080:8080 --name test-app vmocoder
         sleep 2
         curl -s http://localhost:8080/ | grep "Hello, World!" || exit 1
         docker stop test-app && docker rm test-app
+
+    - name: Run tests with pytest
+      run: |
+        PYTHONPATH=. pytest tests/ -v

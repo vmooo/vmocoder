@@ -1,4 +1,4 @@
-.PHONY: help run lint docker-build docker-run compose clean 
+.PHONY: help run lint docker-build docker-run compose test clean 
 
 help:
 	@echo "Available targets:"
@@ -8,6 +8,7 @@ help:
 	@echo "  docker-run   - Build and run Docker container"
 	@echo "  compose-up   - Run with docker composer"
 	@echo "  compose-down - Down with docker composer"
+	@echo "  test         - Run pytest"
 	@echo "  clean        - Remove Python cache"
 
 run:
@@ -28,6 +29,9 @@ compose-up:
 
 compose-down:
 	docker-compose down
+
+test:
+	PYTHONPATH=. pytest tests/ -v
 
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
