@@ -1,11 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>vmocoder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoder</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f0f5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 40px 35px;
+            box-shadow: 0 20px 60px rgba(0, 20, 30, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            color: #1a2e3f;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #4a6a7f;
+            margin-left: auto;
+        }
+        .subtitle {
+            color: #3a5a6f;
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+            border-left: 4px solid #5b8c9e;
+            padding-left: 16px;
+            background: rgba(91, 140, 158, 0.08);
+            border-radius: 0 10px 10px 0;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #1f3a4b;
+            margin-bottom: 5px;
+        }
+        textarea, select, button {
+            width: 100%;
+            padding: 12px 16px;
+            font-family: inherit;
+            font-size: 1rem;
+            border: 1px solid #d0dfe8;
+            border-radius: 14px;
+            background: white;
+            transition: 0.2s ease;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        textarea:focus, select:focus {
+            border-color: #3b7a8f;
+            box-shadow: 0 0 0 4px rgba(59, 122, 143, 0.2);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+            line-height: 1.5;
+        }
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .row .form-group {
+            flex: 1 1 180px;
+            min-width: 140px;
+        }
+        button {
+            background: #1f4a5e;
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 14px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 40px;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(31, 74, 94, 0.3);
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+        button:hover {
+            background: #143745;
+            transform: scale(1.01);
+            box-shadow: 0 6px 20px rgba(31, 74, 94, 0.4);
+        }
+        .result-box {
+            margin-top: 28px;
+            background: #f2f8fc;
+            border-radius: 18px;
+            padding: 20px 22px;
+            border-left: 5px solid #1f4a5e;
+            word-break: break-all;
+        }
+        .result-box .label {
+            font-weight: 600;
+            color: #1f3a4b;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .result-box .value {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #d0dfe8;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .error-box {
+            margin-top: 18px;
+            background: #fff0f0;
+            border-left: 5px solid #c0392b;
+            padding: 14px 18px;
+            border-radius: 14px;
+            color: #a93226;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #6a8a9f;
+            text-align: center;
+            border-top: 1px solid #d9e6ef;
+            padding-top: 18px;
+        }
+        @media (max-width: 550px) {
+            .card { padding: 25px 18px; }
+            h1 { font-size: 1.6rem; flex-wrap: wrap; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>You requested: {path}</p>
+<div class="card">
+    <h1>
+        <span>vmocoder</span>
+        <small>v1.0</small>
+    </h1>
+    <div class="subtitle">Convert text to different encodings and formats</div>
+
+    <form method="post" action="/">
+        <div class="form-group">
+            <label for="text">Enter text</label>
+            <textarea id="text" name="text" placeholder="!">$text</textarea>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="input_enc">Input encoding</label>
+                $input_select
+            </div>
+            <div class="form-group">
+                <label for="output_enc">Algorithm</label>
+                $output_select
+            </div>
+        </div>
+
+        <button type="submit">Encode</button>
+    </form>
+
+    $result
+    $error
+</div>
 </body>
 </html>
