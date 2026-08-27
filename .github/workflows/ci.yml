@@ -53,9 +53,9 @@ jobs:
         pip-audit --requirement requirements.txt --format markdown > pip-audit.md || true
 
   security-scan:
-  runs-on: ubuntu-latest
-  needs: test
-  steps:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Build Docker image
