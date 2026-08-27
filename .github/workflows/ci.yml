@@ -30,7 +30,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t my-encoder .
+        docker build -t vmocoder .
         docker images 
 
     - name: Run container test
