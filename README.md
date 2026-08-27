@@ -22,7 +22,19 @@ docker run -d --rm -p 8080:8080 --name app vmocoder
 ### Run with Docker Compose
 
 ```bash
-docker-compose up -d
+docker-compose up
+```
+
+### Run with `Makefile`
+
+```bash
+make docker-run
+```
+
+or 
+
+```bash
+make compose-up
 ```
 
 ### Possible problems
