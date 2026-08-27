@@ -31,7 +31,7 @@ compose-down:
 	docker-compose down
 
 test:
-	PYTHONPATH=. pytest tests/ -v
+	pytest tests/ -v
 
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true

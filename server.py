@@ -2,13 +2,7 @@ import os
 import logging
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-PORT = int(os.getenv('PORT', 8080))
-LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO').upper()
-
-logging.basicConfig(
-    level=getattr(logging, LOG_LEVEL, logging.INFO),
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+DEFAULT_PORT = int(os.getenv('PORT', 8080))
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -35,9 +29,11 @@ class Handler(BaseHTTPRequestHandler):
             self.send_error(500, "Internal Server Error")
 
 
-def main():
-    server = HTTPServer(('', PORT), Handler)
-    logging.info(f"Starting server on port {PORT}")
+def main(port=None):
+    if port is None:
+        port = DEFAULT_PORT
+    server = HTTPServer(('', port), Handler)
+    logging.info(f"Starting server on port {port}")
     try:
         server.serve_forever()
     except KeyboardInterrupt:

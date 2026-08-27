@@ -42,5 +42,5 @@ jobs:
         docker stop test-app && docker rm test-app
 
     - name: Run tests with pytest
-      run: |
-        PYTHONPATH=. pytest tests/ -v
+      run: | 
+        python -m pytest tests/ -v

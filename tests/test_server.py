@@ -1,22 +1,28 @@
 import unittest
-from http.server import HTTPServer
 import threading
 import urllib.request
 import urllib.error
+import socket
+import time
 import os
-import tempfile
 import shutil
+import tempfile
 
-from server import Handler, PORT
+from server import Handler, HTTPServer, main  # импортируем классы и функцию
+
+def find_free_port():
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(('', 0))
+        return s.getsockname()[1]
 
 class TestServer(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.server = HTTPServer(('', PORT), Handler)
+        cls.port = find_free_port()
+        cls.server = HTTPServer(('', cls.port), Handler)
         cls.thread = threading.Thread(target=cls.server.serve_forever)
         cls.thread.daemon = True
         cls.thread.start()
-        import time
         time.sleep(0.5)
 
     @classmethod
@@ -26,14 +32,16 @@ class TestServer(unittest.TestCase):
         cls.thread.join()
 
     def test_get_root(self):
-        with urllib.request.urlopen('http://localhost:8080/') as response:
+        url = f'http://localhost:{self.port}/'
+        with urllib.request.urlopen(url) as response:
             self.assertEqual(response.status, 200)
             body = response.read().decode('utf-8')
             self.assertIn('Hello, World!', body)
             self.assertIn('You requested: /', body)
 
     def test_get_with_path(self):
-        with urllib.request.urlopen('http://localhost:8080/hello') as response:
+        url = f'http://localhost:{self.port}/hello'
+        with urllib.request.urlopen(url) as response:
             self.assertEqual(response.status, 200)
             body = response.read().decode('utf-8')
             self.assertIn('You requested: /hello', body)
@@ -42,8 +50,9 @@ class TestServer(unittest.TestCase):
         temp_dir = tempfile.mkdtemp()
         shutil.move('index.html', os.path.join(temp_dir, 'index.html'))
         try:
+            url = f'http://localhost:{self.port}/'
             with self.assertRaises(urllib.error.HTTPError) as context:
-                urllib.request.urlopen('http://localhost:8080/')
+                urllib.request.urlopen(url)
             self.assertEqual(context.exception.code, 404)
         finally:
             shutil.move(os.path.join(temp_dir, 'index.html'), 'index.html')
