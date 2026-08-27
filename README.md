@@ -1,7 +1,18 @@
 # vmocoder
 
-
 ## How to run an application on Linux/MacOS
+
+### Getting ready Docker image
+
+You can get the latest Docker image from ghcr:
+```bash
+docker pull ghcr.io/vmooo/vmocoder:latest 
+```
+
+And run it
+```bash
+docker run -d -p 8080:8080 vmocoder
+```
 
 ### Run locally
 
