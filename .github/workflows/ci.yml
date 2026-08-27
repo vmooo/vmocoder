@@ -46,7 +46,7 @@ jobs:
 
     - name: Security scan with bandit
       run: |
-        bandit -r . -f sarif -o bandit-results.sarif --exit-zero
+        bandit -r . --exclude=tests --exit-zero
     
     - name: Check dependencies with pip-audit
       run: |
