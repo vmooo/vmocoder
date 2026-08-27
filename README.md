@@ -4,7 +4,7 @@ A lightweight Python HTTP microservice that converts text between different enco
 
 ## DevOps Toolchain
 
-1. **Dockerfile** – multi‑stage container image with Python 3.11, running as non‑root user.
+1. **Dockerfile** – simple container image with Python 3.11, running as non‑root user.
 2. **Docker Compose** – one‑command local development setup with environment variables.
 3. **Makefile** – common tasks aliased: `make run`, `make test`, `make lint`, `make docker‑build`, etc.
 4. **CI/CD with GitHub Actions** – automated pipeline that runs:
