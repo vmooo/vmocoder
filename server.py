@@ -14,17 +14,22 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
+
 def encode_base64(data: bytes) -> str:
     return base64.b64encode(data).decode('ascii')
+
 
 def encode_hex(data: bytes) -> str:
     return data.hex()
 
+
 def encode_url(data: bytes) -> str:
     return urllib.parse.quote_from_bytes(data)
 
+
 def encode_html(data: bytes) -> str:
     return ''.join(f'&#{b};' for b in data)
+
 
 def encode_rot13(data: bytes) -> str:
     try:
@@ -41,11 +46,14 @@ def encode_rot13(data: bytes) -> str:
             result.append(ch)
     return ''.join(result)
 
+
 def encode_base32(data: bytes) -> str:
     return base64.b32encode(data).decode('ascii')
 
+
 def encode_quoted_printable(data: bytes) -> str:
     return quopri.encodestring(data).decode('ascii')
+
 
 ENCODERS = {
     'base64': encode_base64,
@@ -56,6 +64,7 @@ ENCODERS = {
     'base32': encode_base32,
     'quoted_printable': encode_quoted_printable,
 }
+
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -127,6 +136,7 @@ class Handler(BaseHTTPRequestHandler):
         html_select += '</select>'
         return html_select
 
+
 def main():
     server = HTTPServer(('', PORT), Handler)
     logging.info(f'Starting server on port {PORT}')
@@ -136,6 +146,7 @@ def main():
         pass
     server.server_close()
     logging.info('Server stopped')
+
 
 if __name__ == '__main__':
     main()
