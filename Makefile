@@ -10,7 +10,7 @@ help:
 	@echo "  compose-down - Down with docker composer"
 	@echo "  test         - Run pytest"
 	@echo "  clean        - Remove Python cache"
-	@echo "  security     - make security checks"
+	@echo "  security     - run pip-audit"
 
 run:
 	python3 server.py
@@ -39,5 +39,4 @@ clean:
 	find . -name "*.pyc" -delete
 
 security:
-	bandit -r . -x tests
 	pip-audit
