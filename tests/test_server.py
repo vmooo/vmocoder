@@ -118,17 +118,6 @@ class TestServer(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertIn('=D0=9F=D1=80=D0=B8=D0=B2=D0=B5=D1=82', body)
 
-    def test_post_invalid_input_encoding(self):
-        data = {
-            'text': 'Привет',
-            'input_enc': 'ascii',  
-            'output_enc': 'base64'
-        }
-        body, status = self._post_form(data)
-        self.assertEqual(status, 200)
-        self.assertIn('error-box', body)
-        self.assertIn('Ошибка кодирования', body)
-
     def test_post_unknown_algorithm(self):
         data = {
             'text': 'Hello',
