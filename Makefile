@@ -1,4 +1,4 @@
-.PHONY: help run lint docker-build docker-run compose test clean 
+.PHONY: help run lint docker-build docker-run compose test clean security
 
 help:
 	@echo "Available targets:"
@@ -10,6 +10,7 @@ help:
 	@echo "  compose-down - Down with docker composer"
 	@echo "  test         - Run pytest"
 	@echo "  clean        - Remove Python cache"
+	@echo "  security     - make security checks"
 
 run:
 	python3 server.py
@@ -36,3 +37,7 @@ test:
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 	find . -name "*.pyc" -delete
+
+security:
+	bandit -r . -x tests
+	pip-audit
