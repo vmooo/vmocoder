@@ -127,7 +127,7 @@ class TestServer(unittest.TestCase):
         body, status = self._post_form(data)
         self.assertEqual(status, 200)
         self.assertIn('error-box', body)
-        self.assertIn('Неизвестный алгоритм', body)
+        self.assertIn('Cant find algorithm', body)
 
     def test_missing_template(self):
         temp_dir = tempfile.mkdtemp()
