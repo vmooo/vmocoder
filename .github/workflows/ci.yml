@@ -31,9 +31,9 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t my-encoder .
-        docker images  # просто для проверки
+        docker images 
 
-    - name: (Optional) Run container test
+    - name: Run container test
       run: |
         docker run -d -p 8080:8080 --name test-app my-encoder
         sleep 2
