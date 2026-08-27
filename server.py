@@ -39,7 +39,7 @@ def main(port=None):
     except KeyboardInterrupt:
         pass
     server.server_close()
-    logging.info("Server stopped")
+    logging.info("Server stopped.")
 
 
 if __name__ == '__main__':
