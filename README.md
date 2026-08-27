@@ -28,7 +28,7 @@ A lightweight Python HTTP microservice that converts text between different enco
 - Docker (optional)
 - Docker Compose (optional)
 
-### Getting ready Docker image
+### Getting ready with Docker image
 
 You can get the latest Docker image from ghcr:
 ```bash
